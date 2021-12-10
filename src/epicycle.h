@@ -21,5 +21,5 @@ public:
     void SetPosition(const sf::Vector2f& position);
     auto GetPosition() const -> sf::Vector2f;
 
-    friend bool operator<(const Epicycle& lhs, const Epicycle rhs);
+    friend bool operator<(const Epicycle& lhs, const Epicycle& rhs);
 };

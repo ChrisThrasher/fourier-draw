@@ -46,4 +46,4 @@ auto Epicycle::GetPosition() const -> sf::Vector2f
     return m_position + m_amplitude * sf::Vector2f(std::cos(m_phase), std::sin(m_phase));
 }
 
-auto operator<(const Epicycle& lhs, const Epicycle rhs) -> bool { return lhs.m_amplitude > rhs.m_amplitude; }
+auto operator<(const Epicycle& lhs, const Epicycle& rhs) -> bool { return lhs.m_amplitude > rhs.m_amplitude; }
