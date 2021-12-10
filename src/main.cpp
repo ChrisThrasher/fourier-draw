@@ -70,22 +70,21 @@ int main()
             const auto mouse = sf::Mouse::getPosition(window);
             if (mouse.x >= 0 && mouse.x <= (int)width && mouse.y >= 0 && mouse.y <= (int)height) {
                 const auto position = sf::Vector2f((float)mouse.x, (float)mouse.y);
+                const auto reset_line
+                    = [position, &signal, &line, &line_shadow, &x_epicycles, &y_epicycles, &frame_count]() {
+                          signal.PushBack(position);
+                          line = {};
+                          line_shadow = signal;
+                          std::tie(x_epicycles, y_epicycles) = Transform(signal);
+                          frame_count = 0;
+                      };
                 if (signal.Empty()) {
-                    signal.PushBack(position);
-                    line = {};
-                    line_shadow = signal;
-                    std::tie(x_epicycles, y_epicycles) = Transform(signal);
-                    frame_count = 0;
+                    reset_line();
                 } else {
                     const auto vector = position - signal.Back();
                     const auto length = std::sqrt(vector.x * vector.x + vector.y * vector.y);
-                    if (length > 2.0f) {
-                        signal.PushBack(position);
-                        line = {};
-                        line_shadow = signal;
-                        std::tie(x_epicycles, y_epicycles) = Transform(signal);
-                        frame_count = 0;
-                    }
+                    if (length > 2.0f)
+                        reset_line();
                 }
             }
         }
