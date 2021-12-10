@@ -8,7 +8,7 @@ void Line::PushBack(const sf::Vector2f& vertex) { m_vertices.push_back(vertex); 
 
 void Line::SetBrightness(const sf::Uint8 brightness) { m_color = { brightness, brightness, brightness }; }
 
-void Line::Draw(sf::RenderWindow& window) const
+void Line::draw(sf::RenderTarget& target, sf::RenderStates) const
 {
     constexpr auto stroke = 5.0f;
 
@@ -23,7 +23,7 @@ void Line::Draw(sf::RenderWindow& window) const
         line.setPosition(m_vertices[i]);
         line.setRotation(heading * 180.0f / pi);
         line.setFillColor(m_color);
-        window.draw(line);
+        target.draw(line);
     }
 
     // Draw circles at vertices to smooth sharp corners
@@ -32,6 +32,6 @@ void Line::Draw(sf::RenderWindow& window) const
         circle.setOrigin({ circle.getRadius(), circle.getRadius() });
         circle.setPosition(vertex);
         circle.setFillColor(m_color);
-        window.draw(circle);
+        target.draw(circle);
     }
 }

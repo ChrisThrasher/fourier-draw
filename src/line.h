@@ -2,14 +2,15 @@
 
 #include <SFML/Graphics.hpp>
 
-class Line {
+class Line : public sf::Drawable {
     std::vector<sf::Vector2f> m_vertices {};
     sf::Color m_color { sf::Color::White };
 
 public:
+    void draw(sf::RenderTarget& target, sf::RenderStates) const override;
+
     void PushBack(const sf::Vector2f& vertex);
     void SetBrightness(const sf::Uint8 brightness);
-    void Draw(sf::RenderWindow& window) const;
     auto Size() const { return m_vertices.size(); }
     auto Empty() const { return m_vertices.empty(); }
     auto Back() const { return m_vertices.back(); }

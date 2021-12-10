@@ -112,7 +112,7 @@ int main()
         }
 
         line_shadow.SetBrightness((sf::Uint8)std::max(196 - 4 * (int)frame_count, 0));
-        line_shadow.Draw(window);
+        window.draw(line_shadow);
 
         const auto update = [&window](std::vector<Epicycle>& epicycles) {
             const auto dt = 2.0f * pi / (float)epicycles.size();
@@ -121,14 +121,14 @@ int main()
                     epicycles[i].Update(dt);
                 else
                     epicycles[i].Update(dt, epicycles[i - 1].GetPosition());
-                epicycles[i].Draw(window);
+                window.draw(epicycles[i]);
             }
         };
         update(epicycle_set.x);
         update(epicycle_set.y);
 
         line.PushBack(signal.At(frame_count));
-        line.Draw(window);
+        window.draw(line);
 
         constexpr auto stroke = 2.5f;
         auto vertical = sf::RectangleShape(

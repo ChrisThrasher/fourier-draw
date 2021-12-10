@@ -9,7 +9,15 @@ Epicycle::Epicycle(const float amplitude, const float frequency, const float pha
 {
 }
 
-void Epicycle::Draw(sf::RenderWindow& window) const
+void Epicycle::Update(const float dt) { Update(dt, m_position); }
+
+void Epicycle::Update(const float dt, const sf::Vector2f& position)
+{
+    m_position = position;
+    m_phase = fmodf(m_frequency * dt + m_phase, 2 * pi);
+}
+
+void Epicycle::draw(sf::RenderTarget& target, sf::RenderStates) const
 {
     constexpr auto to_degrees = 180.0f / pi;
     constexpr auto stroke = 2.5f;
@@ -21,23 +29,14 @@ void Epicycle::Draw(sf::RenderWindow& window) const
     circle.setFillColor(sf::Color::Transparent);
     circle.setOutlineColor(color);
     circle.setOutlineThickness(stroke);
+    target.draw(circle);
 
     auto line = sf::RectangleShape({ circle.getRadius(), stroke });
     line.setOrigin({ 0.0f, line.getSize().y / 2.0f });
     line.setPosition(m_position);
     line.setRotation(m_phase * to_degrees);
     line.setFillColor(color);
-
-    window.draw(circle);
-    window.draw(line);
-}
-
-void Epicycle::Update(const float dt) { Update(dt, m_position); }
-
-void Epicycle::Update(const float dt, const sf::Vector2f& position)
-{
-    m_position = position;
-    m_phase = fmodf(m_frequency * dt + m_phase, 2 * pi);
+    target.draw(line);
 }
 
 void Epicycle::SetPosition(const sf::Vector2f& position) { m_position = position; }
