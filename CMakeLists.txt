@@ -10,7 +10,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
     add_compile_options(-Werror -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion)
 endif()
 
-add_executable(fourier-draw src/main.cpp src/epicycle.cpp src/dft.cpp src/line.cpp)
+add_executable(fourier-draw src/main.cpp src/epicycle.cpp src/epicycles.cpp src/dft.cpp src/line.cpp)
 target_link_libraries(fourier-draw PRIVATE sfml-graphics sfml-window)
 target_compile_definitions(fourier-draw PRIVATE FONT_PATH="${CMAKE_SOURCE_DIR}/data")
 target_compile_features(fourier-draw PRIVATE cxx_std_20)

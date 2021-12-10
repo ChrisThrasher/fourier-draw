@@ -1,47 +1,31 @@
-#include "dft.h"
-#include "epicycle.h"
+#include "epicycles.h"
 #include "line.h"
 
-#include <algorithm>
 #include <cmath>
 
 static constexpr auto width = 1920u;
 static constexpr auto height = 1080u;
 
-struct EpicycleSet {
-    std::vector<Epicycle> x;
-    std::vector<Epicycle> y;
-};
-
 static auto Transform(const Line& line)
 {
-    struct {
-        std::vector<float> x;
-        std::vector<float> y;
-    } signal;
+    auto x_signal = std::vector<float>();
+    auto y_signal = std::vector<float>();
     for (size_t i = 0; i < line.Size(); ++i) {
         const auto point = line.At(i);
-        signal.x.push_back(point.x - width / 2.0f);
-        signal.y.push_back(point.y - height / 2.0f);
+        x_signal.push_back(point.x - width / 2.0f);
+        y_signal.push_back(point.y - height / 2.0f);
     }
 
-    auto epicycle_set = EpicycleSet();
-    for (const auto& dft_datum : DiscreteFourierTransform(signal.x))
-        epicycle_set.x.emplace_back(dft_datum.amplitude, dft_datum.frequency, dft_datum.phase);
-    std::stable_sort(epicycle_set.x.begin(), epicycle_set.x.end());
-    epicycle_set.x.front().SetPosition({ width / 2.0f, 200.0f });
+    const auto x_epicycles = Epicycles(DiscreteFourierTransform(x_signal), { width / 2.0f, 200.0f }, 0.0f);
+    const auto y_epicycles = Epicycles(DiscreteFourierTransform(y_signal), { 200.0f, height / 2.0f }, half_pi);
 
-    for (const auto& dft_datum : DiscreteFourierTransform(signal.y))
-        epicycle_set.y.emplace_back(dft_datum.amplitude, dft_datum.frequency, dft_datum.phase + half_pi);
-    std::stable_sort(epicycle_set.y.begin(), epicycle_set.y.end());
-    epicycle_set.y.front().SetPosition({ 200.0f, height / 2.0f });
-
-    return epicycle_set;
+    return std::make_pair(x_epicycles, y_epicycles);
 }
 
 int main()
 {
-    auto epicycle_set = EpicycleSet();
+    auto x_epicycles = Epicycles();
+    auto y_epicycles = Epicycles();
     auto signal = Line();
     auto line = Line();
     auto line_shadow = Line();
@@ -69,7 +53,8 @@ int main()
                 switch (event.key.code) {
                 case sf::Keyboard::Space:
                     signal = {};
-                    epicycle_set = {};
+                    x_epicycles = {};
+                    y_epicycles = {};
                     break;
                 default:
                     break;
@@ -89,7 +74,7 @@ int main()
                     signal.PushBack(position);
                     line = {};
                     line_shadow = signal;
-                    epicycle_set = Transform(signal);
+                    std::tie(x_epicycles, y_epicycles) = Transform(signal);
                     frame_count = 0;
                 } else {
                     const auto vector = position - signal.Back();
@@ -98,14 +83,14 @@ int main()
                         signal.PushBack(position);
                         line = {};
                         line_shadow = signal;
-                        epicycle_set = Transform(signal);
+                        std::tie(x_epicycles, y_epicycles) = Transform(signal);
                         frame_count = 0;
                     }
                 }
             }
         }
 
-        if (epicycle_set.x.empty()) {
+        if (x_epicycles.Empty()) {
             window.draw(text);
             window.display();
             continue;
@@ -114,38 +99,29 @@ int main()
         line_shadow.SetBrightness((sf::Uint8)std::max(196 - 4 * (int)frame_count, 0));
         window.draw(line_shadow);
 
-        const auto update = [&window](std::vector<Epicycle>& epicycles) {
-            const auto dt = 2.0f * pi / (float)epicycles.size();
-            for (size_t i = 0; i < epicycles.size(); ++i) {
-                if (i == 0)
-                    epicycles[i].Update(dt);
-                else
-                    epicycles[i].Update(dt, epicycles[i - 1].GetPosition());
-                window.draw(epicycles[i]);
-            }
-        };
-        update(epicycle_set.x);
-        update(epicycle_set.y);
+        x_epicycles.Update();
+        y_epicycles.Update();
+
+        window.draw(x_epicycles);
+        window.draw(y_epicycles);
 
         line.PushBack(signal.At(frame_count));
         window.draw(line);
 
         constexpr auto stroke = 2.5f;
-        auto vertical = sf::RectangleShape(
-            { stroke, epicycle_set.y.back().GetPosition().y - epicycle_set.x.back().GetPosition().y });
+        auto vertical = sf::RectangleShape({ stroke, y_epicycles.Tip().y - x_epicycles.Tip().y });
         vertical.setOrigin({ 0.0f, stroke / 2.0f });
-        vertical.setPosition(epicycle_set.x.back().GetPosition());
+        vertical.setPosition(x_epicycles.Tip());
         vertical.setFillColor(sf::Color(255, 255, 255, 128));
         window.draw(vertical);
 
-        auto horizontal = sf::RectangleShape(
-            { epicycle_set.x.back().GetPosition().x - epicycle_set.y.back().GetPosition().x, stroke });
+        auto horizontal = sf::RectangleShape({ x_epicycles.Tip().x - y_epicycles.Tip().x, stroke });
         horizontal.setOrigin({ 0.0f, stroke / 2.0f });
-        horizontal.setPosition(epicycle_set.y.back().GetPosition());
+        horizontal.setPosition(y_epicycles.Tip());
         horizontal.setFillColor(sf::Color(255, 255, 255, 128));
         window.draw(horizontal);
 
-        if (++frame_count == epicycle_set.x.size()) {
+        if (++frame_count == x_epicycles.Size()) {
             frame_count = 0;
             line_shadow = line;
             line = {};
