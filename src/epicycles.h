@@ -12,7 +12,7 @@ public:
     void Update();
     void draw(sf::RenderTarget& target, sf::RenderStates) const override;
 
-    auto Empty() const { return m_epicycles.empty(); }
-    auto Size() const { return m_epicycles.size(); }
-    auto Tip() const { return m_epicycles.back().GetPosition(); }
+    [[nodiscard]] auto Empty() const { return m_epicycles.empty(); }
+    [[nodiscard]] auto Size() const { return m_epicycles.size(); }
+    [[nodiscard]] auto Tip() const { return m_epicycles.back().GetPosition(); }
 };

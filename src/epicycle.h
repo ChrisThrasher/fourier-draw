@@ -19,7 +19,7 @@ public:
     void draw(sf::RenderTarget& target, sf::RenderStates) const override;
 
     void SetPosition(const sf::Vector2f& position);
-    auto GetPosition() const -> sf::Vector2f;
+    [[nodiscard]] auto GetPosition() const -> sf::Vector2f;
 
-    friend bool operator<(const Epicycle& lhs, const Epicycle& rhs);
+    friend auto operator<(const Epicycle& lhs, const Epicycle& rhs) -> bool;
 };

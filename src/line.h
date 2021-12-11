@@ -11,8 +11,8 @@ public:
 
     void PushBack(const sf::Vector2f& vertex);
     void SetBrightness(const sf::Uint8 brightness);
-    auto Size() const { return m_vertices.size(); }
-    auto Empty() const { return m_vertices.empty(); }
-    auto Back() const { return m_vertices.back(); }
-    auto At(const size_t i) const { return m_vertices.at(i); }
+    [[nodiscard]] auto Size() const { return m_vertices.size(); }
+    [[nodiscard]] auto Empty() const { return m_vertices.empty(); }
+    [[nodiscard]] auto Back() const { return m_vertices.back(); }
+    [[nodiscard]] auto At(const size_t i) const { return m_vertices.at(i); }
 };
