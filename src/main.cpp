@@ -98,7 +98,7 @@ int main()
         line_shadow.set_brightness((sf::Uint8)std::max(196 - 4 * (int)frame_count, 0));
         window.draw(line_shadow);
 
-        if (frame_count % 2) {
+        if (frame_count % 2 == 0) {
             x_epicycles.update();
             y_epicycles.update();
             line.push_back(signal.at(frame_count / 2));
