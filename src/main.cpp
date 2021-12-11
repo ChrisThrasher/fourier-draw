@@ -98,13 +98,14 @@ int main()
         line_shadow.SetBrightness((sf::Uint8)std::max(196 - 4 * (int)frame_count, 0));
         window.draw(line_shadow);
 
-        x_epicycles.Update();
-        y_epicycles.Update();
+        if (frame_count % 2) {
+            x_epicycles.Update();
+            y_epicycles.Update();
+            line.PushBack(signal.At(frame_count / 2));
+        }
 
         window.draw(x_epicycles);
         window.draw(y_epicycles);
-
-        line.PushBack(signal.At(frame_count));
         window.draw(line);
 
         constexpr auto stroke = 2.5f;
@@ -120,7 +121,7 @@ int main()
         horizontal.setFillColor(sf::Color(255, 255, 255, 128));
         window.draw(horizontal);
 
-        if (++frame_count == x_epicycles.Size()) {
+        if (++frame_count == 2 * x_epicycles.Size()) {
             frame_count = 0;
             line_shadow = line;
             line = {};
