@@ -4,7 +4,7 @@
 
 static constexpr auto pi = 3.1415926f;
 
-auto DiscreteFourierTransform(const std::vector<float>& values) -> std::vector<DftData>
+auto discrete_fourier_transform(const std::vector<float>& values) -> std::vector<DftData>
 {
     const auto size = (float)values.size();
     auto transformed = std::vector<DftData>();

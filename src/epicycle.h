@@ -14,12 +14,12 @@ class Epicycle : public sf::Drawable {
 public:
     Epicycle(const float amplitude, const float frequency, const float phase);
 
-    void Update(const float dt);
-    void Update(const float dt, const sf::Vector2f& position);
+    void update(const float dt);
+    void update(const float dt, const sf::Vector2f& position);
     void draw(sf::RenderTarget& target, sf::RenderStates) const override;
 
-    void SetPosition(const sf::Vector2f& position);
-    [[nodiscard]] auto GetPosition() const -> sf::Vector2f;
+    void set_position(const sf::Vector2f& position);
+    [[nodiscard]] auto get_position() const -> sf::Vector2f;
 
     friend auto operator<(const Epicycle& lhs, const Epicycle& rhs) -> bool;
 };

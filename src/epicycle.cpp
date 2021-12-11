@@ -9,9 +9,9 @@ Epicycle::Epicycle(const float amplitude, const float frequency, const float pha
 {
 }
 
-void Epicycle::Update(const float dt) { Update(dt, m_position); }
+void Epicycle::update(const float dt) { update(dt, m_position); }
 
-void Epicycle::Update(const float dt, const sf::Vector2f& position)
+void Epicycle::update(const float dt, const sf::Vector2f& position)
 {
     m_position = position;
     m_phase = fmodf(m_frequency * dt + m_phase, 2 * pi);
@@ -39,9 +39,9 @@ void Epicycle::draw(sf::RenderTarget& target, sf::RenderStates) const
     target.draw(line);
 }
 
-void Epicycle::SetPosition(const sf::Vector2f& position) { m_position = position; }
+void Epicycle::set_position(const sf::Vector2f& position) { m_position = position; }
 
-auto Epicycle::GetPosition() const -> sf::Vector2f
+auto Epicycle::get_position() const -> sf::Vector2f
 {
     return m_position + m_amplitude * sf::Vector2f(std::cos(m_phase), std::sin(m_phase));
 }

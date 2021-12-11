@@ -6,18 +6,18 @@
 static constexpr auto width = 1920u;
 static constexpr auto height = 1080u;
 
-static auto Transform(const Line& line)
+static auto transform(const Line& line)
 {
     auto x_signal = std::vector<float>();
     auto y_signal = std::vector<float>();
-    for (size_t i = 0; i < line.Size(); ++i) {
-        const auto point = line.At(i);
+    for (size_t i = 0; i < line.size(); ++i) {
+        const auto point = line.at(i);
         x_signal.push_back(point.x - width / 2.0f);
         y_signal.push_back(point.y - height / 2.0f);
     }
 
-    const auto x_epicycles = Epicycles(DiscreteFourierTransform(x_signal), { width / 2.0f, 200.0f }, 0.0f);
-    const auto y_epicycles = Epicycles(DiscreteFourierTransform(y_signal), { 200.0f, height / 2.0f }, half_pi);
+    const auto x_epicycles = Epicycles(discrete_fourier_transform(x_signal), { width / 2.0f, 200.0f }, 0.0f);
+    const auto y_epicycles = Epicycles(discrete_fourier_transform(y_signal), { 200.0f, height / 2.0f }, half_pi);
 
     return std::make_pair(x_epicycles, y_epicycles);
 }
@@ -72,16 +72,16 @@ int main()
                 const auto position = sf::Vector2f((float)mouse.x, (float)mouse.y);
                 const auto reset_line
                     = [position, &signal, &line, &line_shadow, &x_epicycles, &y_epicycles, &frame_count]() {
-                          signal.PushBack(position);
+                          signal.push_back(position);
                           line = {};
                           line_shadow = signal;
-                          std::tie(x_epicycles, y_epicycles) = Transform(signal);
+                          std::tie(x_epicycles, y_epicycles) = transform(signal);
                           frame_count = 0;
                       };
-                if (signal.Empty()) {
+                if (signal.empty()) {
                     reset_line();
                 } else {
-                    const auto vector = position - signal.Back();
+                    const auto vector = position - signal.back();
                     const auto length = std::sqrt(vector.x * vector.x + vector.y * vector.y);
                     if (length > 2.0f)
                         reset_line();
@@ -89,19 +89,19 @@ int main()
             }
         }
 
-        if (x_epicycles.Empty()) {
+        if (x_epicycles.empty()) {
             window.draw(text);
             window.display();
             continue;
         }
 
-        line_shadow.SetBrightness((sf::Uint8)std::max(196 - 4 * (int)frame_count, 0));
+        line_shadow.set_brightness((sf::Uint8)std::max(196 - 4 * (int)frame_count, 0));
         window.draw(line_shadow);
 
         if (frame_count % 2) {
-            x_epicycles.Update();
-            y_epicycles.Update();
-            line.PushBack(signal.At(frame_count / 2));
+            x_epicycles.update();
+            y_epicycles.update();
+            line.push_back(signal.at(frame_count / 2));
         }
 
         window.draw(x_epicycles);
@@ -109,19 +109,19 @@ int main()
         window.draw(line);
 
         constexpr auto stroke = 2.5f;
-        auto vertical = sf::RectangleShape({ stroke, y_epicycles.Tip().y - x_epicycles.Tip().y });
+        auto vertical = sf::RectangleShape({ stroke, y_epicycles.tip().y - x_epicycles.tip().y });
         vertical.setOrigin({ 0.0f, stroke / 2.0f });
-        vertical.setPosition(x_epicycles.Tip());
+        vertical.setPosition(x_epicycles.tip());
         vertical.setFillColor(sf::Color(255, 255, 255, 128));
         window.draw(vertical);
 
-        auto horizontal = sf::RectangleShape({ x_epicycles.Tip().x - y_epicycles.Tip().x, stroke });
+        auto horizontal = sf::RectangleShape({ x_epicycles.tip().x - y_epicycles.tip().x, stroke });
         horizontal.setOrigin({ 0.0f, stroke / 2.0f });
-        horizontal.setPosition(y_epicycles.Tip());
+        horizontal.setPosition(y_epicycles.tip());
         horizontal.setFillColor(sf::Color(255, 255, 255, 128));
         window.draw(horizontal);
 
-        if (++frame_count == 2 * x_epicycles.Size()) {
+        if (++frame_count == 2 * x_epicycles.size()) {
             frame_count = 0;
             line_shadow = line;
             line = {};

@@ -4,9 +4,9 @@
 
 static constexpr auto pi = 3.1415926f;
 
-void Line::PushBack(const sf::Vector2f& vertex) { m_vertices.push_back(vertex); }
+void Line::push_back(const sf::Vector2f& vertex) { m_vertices.push_back(vertex); }
 
-void Line::SetBrightness(const sf::Uint8 brightness) { m_color = { brightness, brightness, brightness }; }
+void Line::set_brightness(const sf::Uint8 brightness) { m_color = { brightness, brightness, brightness }; }
 
 void Line::draw(sf::RenderTarget& target, sf::RenderStates) const
 {
