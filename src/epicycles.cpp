@@ -13,12 +13,9 @@ Epicycles::Epicycles(const std::vector<DftData>& dft_data, const sf::Vector2f& p
 void Epicycles::update()
 {
     const auto dt = 2.0f * pi / (float)m_epicycles.size();
-    for (size_t i = 0; i < m_epicycles.size(); ++i) {
-        if (i == 0)
-            m_epicycles[i].update(dt);
-        else
-            m_epicycles[i].update(dt, m_epicycles[i - 1].get_position());
-    }
+    m_epicycles.front().update(dt);
+    for (size_t i = 1; i < m_epicycles.size(); ++i)
+        m_epicycles[i].update(dt, m_epicycles[i - 1].get_position());
 }
 
 void Epicycles::draw(sf::RenderTarget& target, sf::RenderStates) const
