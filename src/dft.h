@@ -8,4 +8,4 @@ struct DftData {
     float phase;
 };
 
-auto discrete_fourier_transform(const std::vector<float>& values) -> std::vector<DftData>;
+auto discrete_fourier_transform(const std::vector<float>& signal) -> std::vector<DftData>;
