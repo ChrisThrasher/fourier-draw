@@ -68,8 +68,11 @@ int main()
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
             const auto mouse = sf::Mouse::getPosition(window);
-            if (mouse.x >= 0 && mouse.x <= (int)width && mouse.y >= 0 && mouse.y <= (int)height) {
-                const auto position = sf::Vector2f((float)mouse.x, (float)mouse.y);
+            const auto is_within_x = mouse.x >= 0 && mouse.x <= (int)window.getSize().x;
+            const auto is_within_y = mouse.y >= 0 && mouse.y <= (int)window.getSize().y;
+            if (is_within_x && is_within_y) {
+                const auto position = sf::Vector2f((float)mouse.x * width / (float)window.getSize().x,
+                                                   (float)mouse.y * height / (float)window.getSize().y);
                 const auto reset_line
                     = [position, &signal, &line, &line_shadow, &x_epicycles, &y_epicycles, &frame_count]() {
                           signal.push_back(position);
