@@ -2,23 +2,23 @@
 
 #include <algorithm>
 
-Epicycles::Epicycles(const std::vector<DftData>& dft_data, const sf::Vector2f& position, const float phase)
+Epicycles::Epicycles(const std::vector<DftData>& dft_data, const sf::Vector2f& position, const sf::Angle& phase)
 {
     for (const auto& dft_datum : dft_data)
-        m_epicycles.emplace_back(dft_datum.amplitude, dft_datum.frequency, dft_datum.phase + phase);
+        m_epicycles.emplace_back(dft_datum.amplitude, dft_datum.frequency, sf::radians(dft_datum.phase) + phase);
     std::stable_sort(m_epicycles.begin(), m_epicycles.end());
     m_epicycles.front().set_position(position);
 }
 
 void Epicycles::update()
 {
-    const auto dt = 2.0f * pi / (float)m_epicycles.size();
+    const auto dt = sf::degrees(360).asRadians() / (float)m_epicycles.size();
     m_epicycles.front().update(dt);
     for (size_t i = 1; i < m_epicycles.size(); ++i)
         m_epicycles[i].update(dt, m_epicycles[i - 1].get_position());
 }
 
-void Epicycles::draw(sf::RenderTarget& target, sf::RenderStates /* states */) const
+void Epicycles::draw(sf::RenderTarget& target, const sf::RenderStates& /* states */) const
 {
     for (const auto& epicycle : m_epicycles)
         target.draw(epicycle);

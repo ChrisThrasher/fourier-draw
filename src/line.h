@@ -7,7 +7,7 @@ class Line : public sf::Drawable {
     sf::Color m_color { sf::Color::White };
 
 public:
-    void draw(sf::RenderTarget& target, sf::RenderStates) const override;
+    void draw(sf::RenderTarget& target, const sf::RenderStates&) const override;
 
     void push_back(const sf::Vector2f& vertex);
     void set_brightness(const sf::Uint8 brightness);

@@ -3,8 +3,10 @@
 
 #include <cmath>
 
-static constexpr auto width = 1920u;
-static constexpr auto height = 1080u;
+using namespace sf::Literals;
+
+static constexpr auto width = 1280u;
+static constexpr auto height = 720u;
 
 static auto transform(const Line& line)
 {
@@ -16,8 +18,8 @@ static auto transform(const Line& line)
         y_signal.push_back(point.y - height / 2.0f);
     }
 
-    const auto x_epicycles = Epicycles(discrete_fourier_transform(x_signal), { width / 2.0f, 200.0f }, 0.0f);
-    const auto y_epicycles = Epicycles(discrete_fourier_transform(y_signal), { 200.0f, height / 2.0f }, half_pi);
+    const auto x_epicycles = Epicycles(discrete_fourier_transform(x_signal), { width / 2.0f, 200.0f }, 0_deg);
+    const auto y_epicycles = Epicycles(discrete_fourier_transform(y_signal), { 200.0f, height / 2.0f }, 90_deg);
 
     return std::make_pair(x_epicycles, y_epicycles);
 }
@@ -32,7 +34,8 @@ int main()
     auto frame_count = (size_t)0;
 
     auto font = sf::Font();
-    font.loadFromFile(std::string(FONT_PATH) + "/font.ttf");
+    if (!font.loadFromFile(FONT_PATH / std::filesystem::path("font.ttf")))
+        throw std::runtime_error("Failed to load font");
 
     auto text = sf::Text("Click and drag to draw a curve", font, 48);
     text.setOrigin({ text.getLocalBounds().left + text.getLocalBounds().width / 2.0f,
@@ -40,7 +43,7 @@ int main()
     text.setPosition({ width / 2.0f, 150.0f });
     text.setFillColor(sf::Color::White);
 
-    auto window = sf::RenderWindow(sf::VideoMode(width, height), "Fourier Draw");
+    auto window = sf::RenderWindow(sf::VideoMode({ width, height }), "Fourier Draw");
     window.setFramerateLimit(60);
     while (window.isOpen()) {
         for (auto event = sf::Event(); window.pollEvent(event);) {
@@ -84,8 +87,7 @@ int main()
                     reset_line();
                 } else {
                     const auto vector = position - signal.back();
-                    const auto length = std::sqrt(vector.x * vector.x + vector.y * vector.y);
-                    if (length > 2.0f)
+                    if (vector.length() > 2.0f)
                         reset_line();
                 }
             }

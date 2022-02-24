@@ -7,7 +7,6 @@ SFML-based Fourier transform drawing program
 # Requirements
  * C++20
  * CMake 3.16
- * SFML 2.5.1
 
 # Building & Running
 
