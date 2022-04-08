@@ -12,12 +12,7 @@ void Line::draw(sf::RenderTarget& target, const sf::RenderStates& /* states */) 
 
     // Draw line segments
     for (size_t i = 0; i + 1 < m_vertices.size(); ++i) {
-        const auto segment = m_vertices[i + 1] - m_vertices[i];
-
-        auto line = sf::RectangleShape({ segment.length(), stroke });
-        line.setOrigin({ 0.0f, stroke / 2.0f });
-        line.setPosition(m_vertices[i]);
-        line.setRotation(segment.angle());
+        auto line = sf::LineShape(m_vertices[i], m_vertices[i + 1], stroke);
         line.setFillColor(m_color);
         target.draw(line);
     }

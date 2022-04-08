@@ -27,9 +27,7 @@ void Epicycle::draw(sf::RenderTarget& target, const sf::RenderStates& /* states 
     circle.setOutlineThickness(stroke);
     target.draw(circle);
 
-    auto line = sf::RectangleShape({ circle.getRadius(), stroke });
-    line.setOrigin({ 0.0f, line.getSize().y / 2.0f });
-    line.setPosition(m_position);
+    auto line = sf::LineShape(m_position, m_position + sf::Vector2f(m_amplitude, 0), stroke);
     line.setRotation(m_phase);
     line.setFillColor(color);
     target.draw(line);

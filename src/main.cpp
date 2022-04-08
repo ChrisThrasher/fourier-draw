@@ -112,15 +112,13 @@ int main()
         window.draw(y_epicycles);
         window.draw(line);
 
-        auto vertical = sf::RectangleShape({ stroke, y_epicycles.tip().y - x_epicycles.tip().y });
-        vertical.setOrigin({ 0.0f, stroke / 2.0f });
-        vertical.setPosition(x_epicycles.tip());
+        const auto draw_point = sf::Vector2f(x_epicycles.tip().x, y_epicycles.tip().y);
+
+        auto vertical = sf::LineShape(x_epicycles.tip(), draw_point, stroke);
         vertical.setFillColor(color);
         window.draw(vertical);
 
-        auto horizontal = sf::RectangleShape({ x_epicycles.tip().x - y_epicycles.tip().x, stroke });
-        horizontal.setOrigin({ 0.0f, stroke / 2.0f });
-        horizontal.setPosition(y_epicycles.tip());
+        auto horizontal = sf::LineShape(y_epicycles.tip(), draw_point, stroke);
         horizontal.setFillColor(color);
         window.draw(horizontal);
 

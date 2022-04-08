@@ -11,8 +11,8 @@ endif()
 
 include(FetchContent)
 FetchContent_Declare(SFML
-    GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG master)
+    GIT_REPOSITORY https://github.com/ChrisThrasher/SFML.git
+    GIT_TAG sf_lineshape)
 FetchContent_MakeAvailable(SFML)
 
 add_executable(fourier-draw src/main.cpp src/epicycle.cpp src/epicycles.cpp src/dft.cpp src/line.cpp)
