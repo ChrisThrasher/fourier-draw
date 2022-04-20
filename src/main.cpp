@@ -111,17 +111,16 @@ int main()
         window.draw(y_epicycles);
         window.draw(line);
 
-        constexpr auto stroke = 2.5f;
         auto vertical = sf::RectangleShape({ stroke, y_epicycles.tip().y - x_epicycles.tip().y });
         vertical.setOrigin({ 0.0f, stroke / 2.0f });
         vertical.setPosition(x_epicycles.tip());
-        vertical.setFillColor(sf::Color(255, 255, 255, 128));
+        vertical.setFillColor(color);
         window.draw(vertical);
 
         auto horizontal = sf::RectangleShape({ x_epicycles.tip().x - y_epicycles.tip().x, stroke });
         horizontal.setOrigin({ 0.0f, stroke / 2.0f });
         horizontal.setPosition(y_epicycles.tip());
-        horizontal.setFillColor(sf::Color(255, 255, 255, 128));
+        horizontal.setFillColor(color);
         window.draw(horizontal);
 
         if (++frame_count == 2 * x_epicycles.size()) {

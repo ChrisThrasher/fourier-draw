@@ -20,8 +20,6 @@ void Epicycle::update(const float dt, const sf::Vector2f& position)
 void Epicycle::draw(sf::RenderTarget& target, sf::RenderStates) const
 {
     constexpr auto to_degrees = 180.0f / pi;
-    constexpr auto stroke = 2.5f;
-    const auto color = sf::Color(255, 255, 255, 128);
 
     auto circle = sf::CircleShape(m_amplitude, 60);
     circle.setOrigin({ circle.getRadius(), circle.getRadius() });
