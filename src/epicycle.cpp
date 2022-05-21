@@ -17,7 +17,7 @@ void Epicycle::update(const float dt, const sf::Vector2f& position)
     m_phase = fmodf(m_frequency * dt + m_phase, 2 * pi);
 }
 
-void Epicycle::draw(sf::RenderTarget& target, sf::RenderStates) const
+void Epicycle::draw(sf::RenderTarget& target, sf::RenderStates /* states */) const
 {
     constexpr auto to_degrees = 180.0f / pi;
 
