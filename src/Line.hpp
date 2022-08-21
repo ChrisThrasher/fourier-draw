@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 class Line : public sf::Drawable {
-    std::vector<sf::Vector2f> m_vertices {};
+    std::vector<sf::Vector2f> m_vertices;
     sf::Color m_color { sf::Color::White };
 
 public:
