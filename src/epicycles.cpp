@@ -12,7 +12,7 @@ Epicycles::Epicycles(const std::vector<DftData>& dft_data, const sf::Vector2f& p
 
 void Epicycles::update()
 {
-    const auto dt = sf::degrees(360).asRadians() / (float)m_epicycles.size();
+    const auto dt = sf::degrees(360).asRadians() / float(m_epicycles.size());
     m_epicycles.front().update(dt);
     for (size_t i = 1; i < m_epicycles.size(); ++i)
         m_epicycles[i].update(dt, m_epicycles[i - 1].get_position());

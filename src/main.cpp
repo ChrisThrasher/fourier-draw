@@ -31,7 +31,7 @@ int main()
     auto signal = Line();
     auto line = Line();
     auto line_shadow = Line();
-    auto frame_count = (size_t)0;
+    auto frame_count = size_t(0);
 
     auto font = sf::Font();
     if (!font.loadFromFile(FONT_PATH / std::filesystem::path("font.ttf")))
@@ -70,11 +70,11 @@ int main()
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
             const auto mouse = sf::Mouse::getPosition(window);
-            const auto is_within_x = mouse.x >= 0 && mouse.x <= (int)window.getSize().x;
-            const auto is_within_y = mouse.y >= 0 && mouse.y <= (int)window.getSize().y;
+            const auto is_within_x = mouse.x >= 0 && mouse.x <= int(window.getSize().x);
+            const auto is_within_y = mouse.y >= 0 && mouse.y <= int(window.getSize().y);
             if (is_within_x && is_within_y) {
-                const auto position = sf::Vector2f((float)mouse.x * width / (float)window.getSize().x,
-                                                   (float)mouse.y * height / (float)window.getSize().y);
+                const auto position = sf::Vector2f(float(mouse.x) * width / float(window.getSize().x),
+                                                   float(mouse.y) * height / float(window.getSize().y));
                 const auto reset_line
                     = [position, &signal, &line, &line_shadow, &x_epicycles, &y_epicycles, &frame_count]() {
                           signal.push_back(position);
@@ -99,7 +99,7 @@ int main()
             continue;
         }
 
-        line_shadow.set_brightness((sf::Uint8)std::max(196 - 4 * (int)frame_count, 0));
+        line_shadow.set_brightness(sf::Uint8(std::max(196 - 4 * int(frame_count), 0)));
         window.draw(line_shadow);
 
         if (frame_count % 2 == 0) {
