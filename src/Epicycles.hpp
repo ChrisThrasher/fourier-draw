@@ -1,7 +1,7 @@
 #pragma once
 
-#include "dft.h"
-#include "epicycle.h"
+#include "Dft.hpp"
+#include "Epicycle.hpp"
 
 class Epicycles : public sf::Drawable {
     std::vector<Epicycle> m_epicycles;

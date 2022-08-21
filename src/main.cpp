@@ -1,5 +1,5 @@
-#include "epicycles.h"
-#include "line.h"
+#include "Epicycles.hpp"
+#include "Line.hpp"
 
 #include <cmath>
 

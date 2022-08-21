@@ -1,4 +1,4 @@
-#include "epicycle.h"
+#include "Epicycle.hpp"
 
 #include <cmath>
 

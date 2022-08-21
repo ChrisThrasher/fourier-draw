@@ -1,4 +1,4 @@
-#include "epicycles.h"
+#include "Epicycles.hpp"
 
 #include <algorithm>
 
