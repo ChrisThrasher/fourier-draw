@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 static constexpr auto stroke = 1.f;
-static const sf::Color color(255, 255, 255, 64);
+static constexpr sf::Color color(255, 255, 255, 64);
 
 class Epicycle : public sf::Drawable {
     sf::Vector2f m_position;
