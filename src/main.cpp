@@ -14,12 +14,12 @@ static auto transform(const Line& line)
     auto y_signal = std::vector<float>();
     for (size_t i = 0; i < line.size(); ++i) {
         const auto point = line.at(i);
-        x_signal.push_back(point.x - width / 2.0f);
-        y_signal.push_back(point.y - height / 2.0f);
+        x_signal.push_back(point.x - width / 2.f);
+        y_signal.push_back(point.y - height / 2.f);
     }
 
-    const auto x_epicycles = Epicycles(discrete_fourier_transform(x_signal), { width / 2.0f, 200.0f }, 0_deg);
-    const auto y_epicycles = Epicycles(discrete_fourier_transform(y_signal), { 200.0f, height / 2.0f }, 90_deg);
+    const auto x_epicycles = Epicycles(discrete_fourier_transform(x_signal), { width / 2.f, 200 }, 0_deg);
+    const auto y_epicycles = Epicycles(discrete_fourier_transform(y_signal), { 200, height / 2.f }, 90_deg);
 
     return std::make_pair(x_epicycles, y_epicycles);
 }
@@ -38,9 +38,9 @@ int main()
         throw std::runtime_error("Failed to load font");
 
     auto text = sf::Text("Click and drag to draw a curve", font, 48);
-    text.setOrigin({ text.getLocalBounds().left + text.getLocalBounds().width / 2.0f,
-                     text.getLocalBounds().top + text.getLocalBounds().height / 2.0f });
-    text.setPosition({ width / 2.0f, 150.0f });
+    text.setOrigin({ text.getLocalBounds().left + text.getLocalBounds().width / 2,
+                     text.getLocalBounds().top + text.getLocalBounds().height / 2 });
+    text.setPosition({ width / 2.f, 150 });
     text.setFillColor(sf::Color::White);
 
     auto window = sf::RenderWindow(sf::VideoMode({ width, height }), "Fourier Draw");
@@ -87,7 +87,7 @@ int main()
                     reset_line();
                 } else {
                     const auto vector = position - signal.back();
-                    if (vector.length() > 2.0f)
+                    if (vector.length() > 2)
                         reset_line();
                 }
             }
@@ -113,13 +113,13 @@ int main()
         window.draw(line);
 
         auto vertical = sf::RectangleShape({ stroke, y_epicycles.tip().y - x_epicycles.tip().y });
-        vertical.setOrigin({ 0.0f, stroke / 2.0f });
+        vertical.setOrigin({ 0, stroke / 2 });
         vertical.setPosition(x_epicycles.tip());
         vertical.setFillColor(color);
         window.draw(vertical);
 
         auto horizontal = sf::RectangleShape({ x_epicycles.tip().x - y_epicycles.tip().x, stroke });
-        horizontal.setOrigin({ 0.0f, stroke / 2.0f });
+        horizontal.setOrigin({ 0, stroke / 2 });
         horizontal.setPosition(y_epicycles.tip());
         horizontal.setFillColor(color);
         window.draw(horizontal);

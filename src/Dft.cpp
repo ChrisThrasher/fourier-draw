@@ -11,7 +11,7 @@ auto discrete_fourier_transform(const std::vector<float>& signal) -> std::vector
     for (size_t k = 0; k < signal.size(); ++k) {
         auto val = std::complex<float>();
         for (size_t n = 0; n < signal.size(); ++n) {
-            const auto phi = (2.0f * pi * float(k) * float(n)) / size;
+            const auto phi = (2 * pi * float(k) * float(n)) / size;
             val += signal[n] * std::complex(std::cos(phi), -std::sin(phi));
         }
         val /= size;
