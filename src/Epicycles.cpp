@@ -4,6 +4,7 @@
 
 Epicycles::Epicycles(const std::vector<DftData>& dft_data, const sf::Vector2f& position, const sf::Angle& phase)
 {
+    m_epicycles.reserve(dft_data.size());
     for (const auto& dft_datum : dft_data)
         m_epicycles.emplace_back(dft_datum.amplitude, dft_datum.frequency, sf::radians(dft_datum.phase) + phase);
     std::stable_sort(m_epicycles.begin(), m_epicycles.end());

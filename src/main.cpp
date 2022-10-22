@@ -10,12 +10,12 @@ static constexpr auto height = 720u;
 
 static auto transform(const Line& line)
 {
-    auto x_signal = std::vector<float>();
-    auto y_signal = std::vector<float>();
+    auto x_signal = std::vector<float>(line.size());
+    auto y_signal = std::vector<float>(line.size());
     for (size_t i = 0; i < line.size(); ++i) {
         const auto point = line.at(i);
-        x_signal.push_back(point.x - width / 2.f);
-        y_signal.push_back(point.y - height / 2.f);
+        x_signal[i] = point.x - width / 2.f;
+        y_signal[i] = point.y - height / 2.f;
     }
 
     const auto x_epicycles = Epicycles(discrete_fourier_transform(x_signal), { width / 2.f, 200 }, 0_deg);
