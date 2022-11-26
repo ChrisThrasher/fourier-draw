@@ -18,6 +18,7 @@ FetchContent_MakeAvailable(SFML)
 add_executable(fourier-draw src/main.cpp src/Epicycle.cpp src/Epicycles.cpp src/Dft.cpp src/Line.cpp)
 target_link_libraries(fourier-draw PRIVATE SFML::Graphics)
 target_compile_definitions(fourier-draw PRIVATE FONT_PATH="${CMAKE_SOURCE_DIR}/data")
+target_compile_features(fourier-draw PRIVATE cxx_std_20)
 
 add_custom_target(format
     COMMAND clang-format -i `git ls-files *.cpp *.h`
