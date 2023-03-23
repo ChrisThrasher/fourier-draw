@@ -5,10 +5,11 @@
 
 using namespace sf::Literals;
 
-static constexpr auto width = 1280u;
-static constexpr auto height = 720u;
+namespace {
+constexpr auto width = 1280u;
+constexpr auto height = 720u;
 
-static auto transform(const Line& line, Epicycles& x_epicycles, Epicycles& y_epicycles)
+auto transform(const Line& line, Epicycles& x_epicycles, Epicycles& y_epicycles)
 {
     auto x_signal = std::vector<float>(line.size());
     auto y_signal = std::vector<float>(line.size());
@@ -20,6 +21,7 @@ static auto transform(const Line& line, Epicycles& x_epicycles, Epicycles& y_epi
 
     x_epicycles = { discrete_fourier_transform(x_signal), { width / 2.f, 200 }, 0_deg };
     y_epicycles = { discrete_fourier_transform(y_signal), { 200, height / 2.f }, 90_deg };
+}
 }
 
 int main()
