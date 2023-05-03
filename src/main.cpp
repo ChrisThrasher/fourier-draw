@@ -37,7 +37,7 @@ int main()
     if (!font.loadFromFile(FONT_PATH / std::filesystem::path("font.ttf")))
         throw std::runtime_error("Failed to load font");
 
-    auto text = sf::Text("Click and drag to draw a curve", font, 48);
+    auto text = sf::Text(font, "Click and drag to draw a curve", 48);
     text.setOrigin({ text.getLocalBounds().left + text.getLocalBounds().width / 2,
                      text.getLocalBounds().top + text.getLocalBounds().height / 2 });
     text.setPosition({ width / 2.f, 150 });
