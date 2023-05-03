@@ -43,7 +43,8 @@ int main()
     text.setPosition({ width / 2.f, 150 });
     text.setFillColor(sf::Color::White);
 
-    auto window = sf::RenderWindow(sf::VideoMode({ width, height }), "Fourier Draw");
+    auto window
+        = sf::RenderWindow(sf::VideoMode({ width, height }), "Fourier Draw", sf::Style::Default ^ sf::Style::Resize);
     window.setFramerateLimit(60);
     while (window.isOpen()) {
         for (auto event = sf::Event(); window.pollEvent(event);) {
