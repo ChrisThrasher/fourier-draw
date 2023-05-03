@@ -54,6 +54,9 @@ int main()
                 break;
             case sf::Event::KeyPressed:
                 switch (event.key.code) {
+                case sf::Keyboard::Escape:
+                    window.close();
+                    break;
                 case sf::Keyboard::Space:
                     signal = {};
                     x_epicycles = {};
