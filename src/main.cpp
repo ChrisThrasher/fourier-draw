@@ -77,23 +77,16 @@ int main()
             const auto is_within_x = mouse.x >= 0 && mouse.x <= int(window.getSize().x);
             const auto is_within_y = mouse.y >= 0 && mouse.y <= int(window.getSize().y);
             if (is_within_x && is_within_y) {
+                static constexpr auto minimum_distance_between_points = 5;
                 const auto position = sf::Vector2f(float(mouse.x) * width / float(window.getSize().x),
                                                    float(mouse.y) * height / float(window.getSize().y));
-                const auto reset_line
-                    = [position, &signal, &line, &line_shadow, &x_epicycles, &y_epicycles, &frame_count]() {
-                          signal.push_back(position);
-                          line = {};
-                          line_shadow = signal;
-                          transform(signal, x_epicycles, y_epicycles);
-                          frame_count = 0;
-                      };
-                if (signal.empty()) {
-                    reset_line();
-                } else {
-                    const auto vector = position - signal.back();
-                    if (vector.length() > 2)
-                        reset_line();
-                }
+                if (signal.empty() || (position - signal.back()).length() > minimum_distance_between_points) {
+                    signal.push_back(position);
+                    line = {};
+                    line_shadow = signal;
+                    transform(signal, x_epicycles, y_epicycles);
+                    frame_count = 0;
+                };
             }
         }
 
