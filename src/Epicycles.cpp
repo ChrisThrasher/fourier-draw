@@ -19,7 +19,7 @@ void Epicycles::update()
         m_epicycles[i].update(dt, m_epicycles[i - 1].get_position());
 }
 
-void Epicycles::draw(sf::RenderTarget& target, const sf::RenderStates& /* states */) const
+void Epicycles::draw(sf::RenderTarget& target, sf::RenderStates /* states */) const
 {
     for (const auto& epicycle : m_epicycles)
         target.draw(epicycle);

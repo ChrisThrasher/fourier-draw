@@ -17,7 +17,7 @@ void Epicycle::update(const float dt, const sf::Vector2f& position)
     m_phase = sf::radians(m_frequency * dt + m_phase.asRadians()).wrapUnsigned();
 }
 
-void Epicycle::draw(sf::RenderTarget& target, const sf::RenderStates& /* states */) const
+void Epicycle::draw(sf::RenderTarget& target, sf::RenderStates /* states */) const
 {
     auto circle = sf::CircleShape(m_amplitude, 60);
     circle.setOrigin({ circle.getRadius(), circle.getRadius() });

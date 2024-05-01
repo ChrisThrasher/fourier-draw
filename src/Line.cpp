@@ -6,7 +6,7 @@ void Line::push_back(const sf::Vector2f& vertex) { m_vertices.push_back(vertex);
 
 void Line::set_brightness(const uint8_t brightness) { m_color = { brightness, brightness, brightness }; }
 
-void Line::draw(sf::RenderTarget& target, const sf::RenderStates& /* states */) const
+void Line::draw(sf::RenderTarget& target, sf::RenderStates /* states */) const
 {
     constexpr auto stroke = 5.f;
 

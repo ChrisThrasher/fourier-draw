@@ -48,12 +48,10 @@ int main()
     window.setFramerateLimit(60);
     while (window.isOpen()) {
         for (auto event = sf::Event(); window.pollEvent(event);) {
-            switch (event.type) {
-            case sf::Event::Closed:
+            if (event.is<sf::Event::Closed>()) {
                 window.close();
-                break;
-            case sf::Event::KeyPressed:
-                switch (event.key.code) {
+            } else if (const auto* key_pressed = event.getIf<sf::Event::KeyPressed>()) {
+                switch (key_pressed->code) {
                 case sf::Keyboard::Key::Escape:
                     window.close();
                     break;
@@ -65,8 +63,6 @@ int main()
                 default:
                     break;
                 }
-            default:
-                break;
             }
         }
 
