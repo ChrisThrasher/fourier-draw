@@ -1,5 +1,4 @@
 Checks: >
-  -*,
   bugprone-*,
   clang-analyzer-*,
   concurrency-*,
@@ -13,6 +12,7 @@ Checks: >
   -bugprone-exception-escape,
   -cppcoreguidelines-avoid-magic-numbers,
   -cppcoreguidelines-pro-type-union-access,
+  -misc-include-cleaner,
   -modernize-use-trailing-return-type,
   -readability-braces-around-statements,
   -readability-function-cognitive-complexity,
