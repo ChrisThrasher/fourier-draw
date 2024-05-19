@@ -33,9 +33,7 @@ int main()
     auto line_shadow = Line();
     auto frame_count = size_t(0);
 
-    auto font = sf::Font();
-    if (!font.loadFromFile(FONT_PATH / std::filesystem::path("font.ttf")))
-        throw std::runtime_error("Failed to load font");
+    const auto font = sf::Font::loadFromFile(FONT_PATH / std::filesystem::path("font.ttf")).value();
 
     auto text = sf::Text(font, "Click and drag to draw a curve", 48);
     text.setOrigin({ text.getLocalBounds().left + text.getLocalBounds().width / 2,
@@ -47,7 +45,7 @@ int main()
         = sf::RenderWindow(sf::VideoMode({ width, height }), "Fourier Draw", sf::Style::Default ^ sf::Style::Resize);
     window.setFramerateLimit(60);
     while (window.isOpen()) {
-        for (auto event = sf::Event(); window.pollEvent(event);) {
+        while (const auto event = window.pollEvent()) {
             if (event.is<sf::Event::Closed>()) {
                 window.close();
             } else if (const auto* key_pressed = event.getIf<sf::Event::KeyPressed>()) {
