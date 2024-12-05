@@ -3,15 +3,15 @@ project(fourier-draw CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include(FetchContent)
+FetchContent_Declare(SFML GIT_REPOSITORY https://github.com/SFML/SFML.git)
+FetchContent_MakeAvailable(SFML)
+
 if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
     add_compile_options(-Werror -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Wold-style-cast)
 elseif(MSVC)
     add_compile_options(/WX /W4 /permissive-)
 endif()
-
-include(FetchContent)
-FetchContent_Declare(SFML GIT_REPOSITORY https://github.com/SFML/SFML.git)
-FetchContent_MakeAvailable(SFML)
 
 add_executable(fourier-draw src/main.cpp src/Epicycle.cpp src/Epicycles.cpp src/Dft.cpp src/Line.cpp)
 target_link_libraries(fourier-draw PRIVATE SFML::Graphics)

@@ -33,7 +33,7 @@ int main()
     auto line_shadow = Line();
     auto frame_count = size_t(0);
 
-    const auto font = sf::Font::openFromFile(FONT_PATH / std::filesystem::path("font.ttf")).value();
+    const auto font = sf::Font(FONT_PATH / std::filesystem::path("font.ttf"));
 
     auto text = sf::Text(font, "Click and drag to draw a curve", 48);
     text.setOrigin(text.getLocalBounds().getCenter());
