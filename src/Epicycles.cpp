@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-Epicycles::Epicycles(const std::span<const DftData> dft_data, const sf::Vector2f& position, const sf::Angle& phase)
+Epicycles::Epicycles(const std::span<const DftData> dft_data, const sf::Vector2f position, const sf::Angle phase)
 {
     m_epicycles.reserve(dft_data.size());
     for (const auto& dft_datum : dft_data)

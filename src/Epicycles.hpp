@@ -8,7 +8,7 @@ class Epicycles : public sf::Drawable {
 
 public:
     Epicycles() = default;
-    Epicycles(std::span<const DftData> dft_data, const sf::Vector2f& position, const sf::Angle& phase);
+    Epicycles(std::span<const DftData> dft_data, sf::Vector2f position, sf::Angle phase);
     void update();
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-Epicycle::Epicycle(const float amplitude, const float frequency, const sf::Angle& phase)
+Epicycle::Epicycle(const float amplitude, const float frequency, const sf::Angle phase)
     : m_amplitude(amplitude)
     , m_frequency(frequency)
     , m_phase(phase)
@@ -11,7 +11,7 @@ Epicycle::Epicycle(const float amplitude, const float frequency, const sf::Angle
 
 void Epicycle::update(const float dt) { update(dt, m_position); }
 
-void Epicycle::update(const float dt, const sf::Vector2f& position)
+void Epicycle::update(const float dt, const sf::Vector2f position)
 {
     m_position = position;
     m_phase = sf::radians(m_frequency * dt + m_phase.asRadians()).wrapUnsigned();
@@ -35,7 +35,7 @@ void Epicycle::draw(sf::RenderTarget& target, sf::RenderStates /* states */) con
     target.draw(line);
 }
 
-void Epicycle::set_position(const sf::Vector2f& position) { m_position = position; }
+void Epicycle::set_position(const sf::Vector2f position) { m_position = position; }
 
 auto Epicycle::get_position() const -> sf::Vector2f { return m_position + sf::Vector2f(m_amplitude, m_phase); }
 

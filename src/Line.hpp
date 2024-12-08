@@ -9,7 +9,7 @@ class Line : public sf::Drawable {
 public:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    void push_back(const sf::Vector2f& vertex);
+    void push_back(sf::Vector2f vertex);
     void set_brightness(uint8_t brightness);
     [[nodiscard]] auto size() const { return m_vertices.size(); }
     [[nodiscard]] auto empty() const { return m_vertices.empty(); }

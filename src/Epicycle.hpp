@@ -12,13 +12,13 @@ class Epicycle : public sf::Drawable {
     sf::Angle m_phase;
 
 public:
-    Epicycle(float amplitude, float frequency, const sf::Angle& phase);
+    Epicycle(float amplitude, float frequency, sf::Angle phase);
 
     void update(float dt);
-    void update(float dt, const sf::Vector2f& position);
+    void update(float dt, sf::Vector2f position);
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    void set_position(const sf::Vector2f& position);
+    void set_position(sf::Vector2f position);
     [[nodiscard]] auto get_position() const -> sf::Vector2f;
 
     friend auto operator<(const Epicycle& lhs, const Epicycle& rhs) -> bool;
