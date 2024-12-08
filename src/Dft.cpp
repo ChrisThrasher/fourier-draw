@@ -14,7 +14,7 @@ auto discrete_fourier_transform(const std::vector<float>& signal) -> std::vector
             val += signal[n] * std::complex(std::cos(phi), -std::sin(phi));
         }
         val /= size;
-        transformed[k] = { std::abs(val), float(k), std::arg(val) };
+        transformed[k] = { .amplitude = std::abs(val), .frequency = float(k), .phase = std::arg(val) };
     }
     return transformed;
 }
