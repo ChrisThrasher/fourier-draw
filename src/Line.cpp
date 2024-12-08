@@ -11,7 +11,7 @@ void Line::draw(sf::RenderTarget& target, sf::RenderStates /* states */) const
     constexpr auto stroke = 5.f;
 
     // Draw line segments
-    for (size_t i = 0; i + 1 < m_vertices.size(); ++i) {
+    for (std::size_t i = 0; i + 1 < m_vertices.size(); ++i) {
         const auto segment = m_vertices[i + 1] - m_vertices[i];
 
         auto line = sf::RectangleShape({ segment.length(), stroke });

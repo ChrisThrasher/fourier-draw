@@ -13,7 +13,7 @@ auto transform(const Line& line, Epicycles& x_epicycles, Epicycles& y_epicycles)
 {
     auto x_signal = std::vector<float>(line.size());
     auto y_signal = std::vector<float>(line.size());
-    for (size_t i = 0; i < line.size(); ++i) {
+    for (std::size_t i = 0; i < line.size(); ++i) {
         const auto point = line.at(i);
         x_signal[i] = point.x - width / 2.f;
         y_signal[i] = point.y - height / 2.f;
@@ -31,7 +31,7 @@ int main()
     auto signal = Line();
     auto line = Line();
     auto line_shadow = Line();
-    auto frame_count = size_t(0);
+    auto frame_count = std::size_t(0);
 
     const auto font = sf::Font(FONT_PATH / std::filesystem::path("font.ttf"));
 

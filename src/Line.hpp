@@ -14,5 +14,5 @@ public:
     [[nodiscard]] auto size() const { return m_vertices.size(); }
     [[nodiscard]] auto empty() const { return m_vertices.empty(); }
     [[nodiscard]] auto back() const { return m_vertices.back(); }
-    [[nodiscard]] auto at(const size_t i) const { return m_vertices.at(i); }
+    [[nodiscard]] auto at(const std::size_t i) const { return m_vertices.at(i); }
 };
