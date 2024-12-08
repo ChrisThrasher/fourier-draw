@@ -1,5 +1,6 @@
 #pragma once
 
+#include <span>
 #include <vector>
 
 struct DftData {
@@ -8,4 +9,4 @@ struct DftData {
     float phase;
 };
 
-auto discrete_fourier_transform(const std::vector<float>& signal) -> std::vector<DftData>;
+auto discrete_fourier_transform(std::span<const float> signal) -> std::vector<DftData>;

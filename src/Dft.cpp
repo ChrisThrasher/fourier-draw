@@ -3,7 +3,7 @@
 #include <complex>
 #include <numbers>
 
-auto discrete_fourier_transform(const std::vector<float>& signal) -> std::vector<DftData>
+auto discrete_fourier_transform(const std::span<const float> signal) -> std::vector<DftData>
 {
     const auto size = float(signal.size());
     auto transformed = std::vector<DftData>(signal.size());
