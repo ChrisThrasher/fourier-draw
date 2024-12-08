@@ -1,8 +1,6 @@
 #include "Epicycles.hpp"
 #include "Line.hpp"
 
-#include <cmath>
-
 using namespace sf::Literals;
 
 namespace {

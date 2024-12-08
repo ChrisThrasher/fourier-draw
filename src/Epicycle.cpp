@@ -1,7 +1,5 @@
 #include "Epicycle.hpp"
 
-#include <cmath>
-
 Epicycle::Epicycle(const float amplitude, const float frequency, const sf::Angle phase)
     : m_amplitude(amplitude)
     , m_frequency(frequency)
