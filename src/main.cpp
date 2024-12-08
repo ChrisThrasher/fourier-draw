@@ -40,8 +40,7 @@ int main()
     text.setPosition({ width / 2.f, 150 });
     text.setFillColor(sf::Color::White);
 
-    auto window
-        = sf::RenderWindow(sf::VideoMode({ width, height }), "Fourier Draw", sf::Style::Default ^ sf::Style::Resize);
+    auto window = sf::RenderWindow(sf::VideoMode({ width, height }), "Fourier Draw");
     window.setFramerateLimit(60);
     while (window.isOpen()) {
         while (const auto event = window.pollEvent()) {
